@@ -158,28 +158,19 @@ const setStatusTurbootp = async (id, status) => {
   return response;
 };
 
-const setStatus = async (id, status) => {
-  // Map smshub status codes to sms-activate status codes
-  const statusMap = {
-    1: 1,  // Waiting for SMS
-    6: 6,  // Request a new SMS
-    8: 8   // Cancel activation
-  };
-
-  const mappedStatus = statusMap[status] || status;
-
-  const endpoint = "https://api.sms-activate.org/stubs/handler_api.php";
-  const params = new URLSearchParams({
-    api_key: API_KEY,
-    action: "setStatus",
-    id: id,
-    status: mappedStatus
-  });
-
-  const send = await fetch(`${endpoint}?${params}`, {
-    method: "GET",
-  });
-
+  const setStatus = async (id, status) => {
+  const send = await fetch(
+    "https://api.sms-activate.org/stubs/handler_api.php?" +
+    new URLSearchParams({
+      api_key: API_KEY,
+      action: "setStatus",
+      id: id,
+      status: status
+    }),
+    {
+      method: "GET",
+    }
+  );
   const response = await send.text();
   return response;
 };
