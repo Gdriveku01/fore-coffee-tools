@@ -69,9 +69,14 @@ const getNumberTurbootp = async () => {
 
 const getNumber = async () => {
   const send = await fetch(
-    "https://smshub.org/stubs/handler_api.php?api_key=" +
-      API_KEY +
-      "&action=getNumber&service=asy&operator=telkomsel&country=6",
+    "https://api.sms-activate.org/stubs/handler_api.php?" +
+    new URLSearchParams({
+      api_key: API_KEY,
+      action: "getNumber",
+      service: "asy",
+      operator: "telkomsel",
+      country: "6"
+    }),
     {
       method: "GET",
     }
@@ -79,7 +84,6 @@ const getNumber = async () => {
   const response = await send.text();
   return response;
 };
-
 const getCodeTokoclaude = async (id) => {
   const send = await fetch(
     "https://tokoclaude.com/api/get-orders/" + API_KEY + "/" + id,
@@ -103,15 +107,17 @@ const getCodeTurbootp = async (id) => {
 };
 
 const getCode = async (id) => {
-  const send = await fetch(
-    "https://smshub.org/stubs/handler_api.php?api_key=" +
-      API_KEY +
-      "&action=getStatus&id=" +
-      id,
-    {
-      method: "GET",
-    }
-  );
+  const endpoint = "https://api.sms-activate.org/stubs/handler_api.php";
+  const params = new URLSearchParams({
+    api_key: API_KEY,
+    action: "getStatus",
+    id: id
+  });
+
+  const send = await fetch(`${endpoint}?${params}`, {
+    method: "GET",
+  });
+
   const response = await send.text();
   return response;
 };
