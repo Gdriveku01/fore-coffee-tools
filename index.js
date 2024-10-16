@@ -34,9 +34,11 @@ const getBalanceTurbootp = async () => {
 
 const getBalance = async () => {
   const send = await fetch(
-    "https://smshub.org/stubs/handler_api.php?api_key=" +
-      API_KEY +
-      "&action=getBalance",
+    "https://api.sms-activate.org/stubs/handler_api.php?" +
+    new URLSearchParams({
+      api_key: API_KEY,
+      action: "getBalance"
+    }),
     {
       method: "GET",
     }
